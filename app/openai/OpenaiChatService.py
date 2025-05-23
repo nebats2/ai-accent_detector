@@ -1,4 +1,6 @@
+import os
 
+from fastapi import HTTPException
 from openai import OpenAI, BaseModel
 from langchain.chat_models import init_chat_model
 from pydantic import Field
@@ -45,6 +47,11 @@ def get_accent_scale(transcript_text:str):
 
 def get_video_transcript_text():
     file_path = downloaded_video_path
+    if os.path.isfile(file_path):
+        print("File exists.")
+    else:
+        raise HTTPException(status_code=500, detail="Video is not downloaded.Please download the video from url or local system.")
+
     with open(file_path, "rb") as f:
         transcript = transcript_video(f)
         print(f"\n {transcript}")

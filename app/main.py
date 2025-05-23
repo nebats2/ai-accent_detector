@@ -32,7 +32,7 @@ def download_video(url:str):
     }
 
 @app.get("/accent/rate")
-def get_transcript():
+def get_accent_rate():
     transcript_text = get_video_transcript_text().text
     return {
         "content":get_accent_scale(transcript_text)
